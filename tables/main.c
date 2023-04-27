@@ -10,10 +10,11 @@
 #include <stdlib.h>
 #include "fonctionsTableaux.h"
 
-int main(int argc, const char * argv[]) {
+int main(int argc, const char *argv[])
+{
     int DOB[6] = {20, 24, 25, 6, 71, 69};
     int DOBcopie[6];
-    
+
     afficheTableau(DOB, 6);
     printf("--\n");
     printf("%d\n", sommeTableau(DOB, 6));
@@ -26,9 +27,9 @@ int main(int argc, const char * argv[]) {
     ordonnerTableau(DOB, 6);
     afficheTableau(DOB, 6);
     printf("--\n");
-//    maximumTableau(DOB, 6, 24);
-//    afficheTableau(DOB, 6);
-    
+    // maximumTableau(DOB, 6, 24);
+    // afficheTableau(DOB, 6);
+
     printf("\n\n");
     return 0;
 }
