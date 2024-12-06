@@ -4,22 +4,22 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-struct vec {
+typedef struct vec {
   int *ptr;
   size_t len;
   size_t cap;
-};
+} vec_t;
 
-struct vec vec_init(void);
-void vec_destroy(struct vec *list);
+vec_t vec_init(void);
+void vec_destroy(vec_t *list);
 
-void vec_push(struct vec *list, int elt);
-int vec_pop(struct vec *list);
+void vec_push(vec_t *list, int elt);
+int vec_pop(vec_t *list);
 
-void vec_insert(struct vec *list, int elt, size_t index);
-int vec_remove(struct vec *list, size_t index);
+void vec_insert(vec_t *list, int elt, size_t index);
+int vec_remove(vec_t *list, size_t index);
 
-void vec_insertion_sort(struct vec *list);
-void vec_merge_sort(struct vec *list);
+void vec_insertion_sort(vec_t *list);
+void vec_merge_sort(vec_t *list);
 
 #endif /* ! VEC_H */

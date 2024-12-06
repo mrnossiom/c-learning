@@ -4,28 +4,28 @@
 #include <stddef.h>
 #include <stdbool.h>
 
-struct node
+typedef struct node
 {
     int data;
     struct node *next;
-};
+} node_t;
 
-struct list
+typedef struct list
 {
     size_t len;
-    struct node *head;
-};
+    node_t *head;
+} list_t;
 
-struct list list_init(void);
-void list_destroy(struct list *list);
+list_t list_init(void);
+void list_destroy(list_t *list);
 
-void list_add(struct list *list, int elt);
-int list_pop(struct list *list);
+void list_add(list_t *list, int elt);
+int list_pop(list_t *list);
 
-void list_insert(struct list *list, int elt, size_t index);
-int list_remove(struct list *list, size_t index);
+void list_insert(list_t *list, int elt, size_t index);
+int list_remove(list_t *list, size_t index);
 
-void list_insertion_sort(struct list *list);
-void list_merge_sort(struct list *list);
+void list_insertion_sort(list_t *list);
+void list_merge_sort(list_t *list);
 
 #endif /* ! LINKED_LIST_H */
