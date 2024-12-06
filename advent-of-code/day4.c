@@ -5,10 +5,10 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DEBUG false
+const bool DEBUG = true;
 
-#define NB_OF_COLUMNS 140
-// #define NB_OF_COLUMNS 10
+enum { nb_of_columns = 140 };
+// enum { nb_of_columns = 10 };
 
 bool found_needle(uint8_t *counter, char *needle, unsigned long needle_len,
                   char current_char) {
@@ -45,18 +45,18 @@ uint64_t count_needle(FILE *input) {
   // because the needle `XMAS` doesn't overlap it self in the same direction
 
   // init counters for diagonal direction
-  uint8_t counters_tl[NB_OF_COLUMNS] = {0};
-  uint8_t counters_tr[NB_OF_COLUMNS] = {0};
-  uint8_t counters_bl[NB_OF_COLUMNS] = {0};
-  uint8_t counters_br[NB_OF_COLUMNS] = {0};
+  uint8_t counters_tl[nb_of_columns] = {0};
+  uint8_t counters_tr[nb_of_columns] = {0};
+  uint8_t counters_bl[nb_of_columns] = {0};
+  uint8_t counters_br[nb_of_columns] = {0};
 
   // init counters for top-down directions
-  uint8_t counters_tb[NB_OF_COLUMNS] = {0};
-  uint8_t counters_bt[NB_OF_COLUMNS] = {0};
+  uint8_t counters_tb[nb_of_columns] = {0};
+  uint8_t counters_bt[nb_of_columns] = {0};
 
   uint32_t lines_offset = 0;
 
-  while (getline(&line, &line_len, input) - 1 == NB_OF_COLUMNS) {
+  while (getline(&line, &line_len, input) - 1 == nb_of_columns) {
     uint32_t index = 0;
 
     // init counters for left-right directions
@@ -64,13 +64,13 @@ uint64_t count_needle(FILE *input) {
     uint8_t counter_rl = 0;
 
     // remove extremities of diagonal counters
-    counters_tr[NB_OF_COLUMNS - lines_offset] = 0;
-    counters_tl[(NB_OF_COLUMNS - 1 + lines_offset) % NB_OF_COLUMNS] = 0;
-    counters_br[(NB_OF_COLUMNS - 1 + lines_offset) % NB_OF_COLUMNS] = 0;
-    counters_bl[NB_OF_COLUMNS - lines_offset] = 0;
+    counters_tr[nb_of_columns - lines_offset] = 0;
+    counters_tl[(nb_of_columns - 1 + lines_offset) % nb_of_columns] = 0;
+    counters_br[(nb_of_columns - 1 + lines_offset) % nb_of_columns] = 0;
+    counters_bl[nb_of_columns - lines_offset] = 0;
 
     // ignore final newline
-    while (index < NB_OF_COLUMNS) {
+    while (index < nb_of_columns) {
       char current = line[index];
 
       if (DEBUG)
@@ -91,22 +91,22 @@ uint64_t count_needle(FILE *input) {
         count += 1;
 
       // check top-diagnal
-      if (found_needle(&counters_tr[(NB_OF_COLUMNS - lines_offset + index) %
-                                    NB_OF_COLUMNS],
+      if (found_needle(&counters_tr[(nb_of_columns - lines_offset + index) %
+                                    nb_of_columns],
                        needle, needle_len, current))
         count += 1;
 
-      if (found_needle(&counters_tl[(lines_offset + index) % NB_OF_COLUMNS],
+      if (found_needle(&counters_tl[(lines_offset + index) % nb_of_columns],
                        needle, needle_len, current))
         count += 1;
 
       // check bottom-diagnal
-      if (found_needle(&counters_br[(lines_offset + index) % NB_OF_COLUMNS],
+      if (found_needle(&counters_br[(lines_offset + index) % nb_of_columns],
                        rneedle, needle_len, current))
         count += 1;
 
-      if (found_needle(&counters_bl[(NB_OF_COLUMNS - lines_offset + index) %
-                                    NB_OF_COLUMNS],
+      if (found_needle(&counters_bl[(nb_of_columns - lines_offset + index) %
+                                    nb_of_columns],
                        rneedle, needle_len, current))
         count += 1;
 
@@ -144,11 +144,11 @@ uint64_t x_mas(FILE *input) {
       {'S', 'S', 'M', 'M'},
   };
 
-  while (getline(&nline, &nline_len, input) - 1 == NB_OF_COLUMNS) {
+  while (getline(&nline, &nline_len, input) - 1 == nb_of_columns) {
     if (pline != NULL && cline != NULL) {
       // iterate with a margin of one to avoid out of bounds
       uint32_t index = 1;
-      while (index < NB_OF_COLUMNS - 1) {
+      while (index < nb_of_columns - 1) {
         char current = cline[index];
 
         if (current == 'A') {
