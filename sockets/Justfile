@@ -1,0 +1,12 @@
+_default:
+	@just --list --unsorted --list-heading '' --list-prefix '—— '
+
+clang_args := "-Wall -Wextra -Wno-unused-result"
+	
+server:
+	clang {{clang_args}} server.c -o server
+	@./server
+
+client:
+	clang {{clang_args}} client.c -o client
+	@./client
