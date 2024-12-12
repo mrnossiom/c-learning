@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void vec_print(vec_t *v) {
+static void vec_print(struct vec *v) {
   size_t index = 0;
 
   putchar('[');
@@ -19,20 +19,20 @@ static void vec_print(vec_t *v) {
   puts(" ]");
 }
 
-vec_t vec_init(void) {
+struct vec vec_init(void) {
   size_t len = 0;
   size_t cap = 4;
 
   int *ptr = malloc(cap * sizeof(int));
   assert(ptr != NULL);
 
-  vec_t v = {ptr, len, cap};
+  struct vec v = {ptr, len, cap};
   return v;
 }
 
-void vec_destroy(vec_t *v) { free(v->ptr); }
+void vec_destroy(struct vec *v) { free(v->ptr); }
 
-void _vec_grow(vec_t *v) {
+void _vec_grow(struct vec *v) {
   size_t new_cap = v->cap * 2;
 
   int *ptr = malloc(new_cap * sizeof(int));
@@ -48,7 +48,7 @@ void _vec_grow(vec_t *v) {
   v->cap = new_cap;
 }
 
-void vec_push(vec_t *v, int elt) {
+void vec_push(struct vec *v, int elt) {
   if (v->len == v->cap)
     _vec_grow(v);
 
@@ -56,7 +56,7 @@ void vec_push(vec_t *v, int elt) {
   v->len += 1;
 }
 
-int vec_pop(vec_t *v) {
+int vec_pop(struct vec *v) {
   assert(v->len != 0 && "v must be a non-empty vec");
 
   // shrink length
@@ -65,7 +65,7 @@ int vec_pop(vec_t *v) {
   return v->ptr[v->len];
 }
 
-void vec_insert(vec_t *v, int elt, size_t index) {
+void vec_insert(struct vec *v, int elt, size_t index) {
   assert(index < v->len && "index must be in bounds");
 
   // grow if needed
@@ -81,7 +81,7 @@ void vec_insert(vec_t *v, int elt, size_t index) {
   v->len += 1;
 }
 
-int vec_remove(vec_t *v, size_t index) {
+int vec_remove(struct vec *v, size_t index) {
   assert(v->len != 0 && "v must be a non-empty vec");
   assert(index < v->len && "index must be in bounds");
 
@@ -98,11 +98,11 @@ int vec_remove(vec_t *v, size_t index) {
   return ret;
 }
 
-void vec_insertion_sort(vec_t *v);
-void vec_merge_sort(vec_t *v);
+void vec_insertion_sort(struct vec *v);
+void vec_merge_sort(struct vec *v);
 
 int main(void) {
-  vec_t v = vec_init();
+  struct vec v = vec_init();
 
   vec_push(&v, 1);
   vec_push(&v, 2);

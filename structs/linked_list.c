@@ -4,8 +4,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static void list_print(list_t *list) {
-  node_t *head = list->head;
+static void list_print(struct list *list) {
+  struct node *head = list->head;
 
   putchar('[');
   while (head) {
@@ -15,35 +15,35 @@ static void list_print(list_t *list) {
   puts(" ]");
 }
 
-list_t list_init(void) {
-  list_t list = {0, NULL};
+struct list list_init(void) {
+  struct list list = {0, NULL};
   return list;
 }
 
-void list_destroy(list_t *list) {
-  node_t *current = list->head;
+void list_destroy(struct list *list) {
+  struct node *current = list->head;
 
   // visit each node to free them
   while (current != NULL) {
-    node_t *next = current->next;
+    struct node *next = current->next;
     free(current);
     current = next;
   }
 }
 
-void list_add(list_t *list, int elt) {
-  node_t **current = &list->head;
+void list_add(struct list *list, int elt) {
+  struct node **current = &list->head;
 
   // get to the end of the linked list
   while (*current != NULL) {
     current = &((*current)->next);
   }
 
-  node_t *ptr = malloc(sizeof(node_t));
+  struct node *ptr = malloc(sizeof(struct node));
   assert(ptr != NULL);
 
   // create new node and assign to new memory cell
-  node_t new = {elt, NULL};
+  struct node new = {elt, NULL};
   *ptr = new;
 
   // point current node to new memory cell
@@ -52,10 +52,10 @@ void list_add(list_t *list, int elt) {
   list->len += 1;
 }
 
-int list_pop(list_t *list) {
+int list_pop(struct list *list) {
   assert(list->len != 0 && "list must not be empty");
 
-  node_t **current = &list->head;
+  struct node **current = &list->head;
 
   // point second to last
   while (*current != NULL && (*current)->next != NULL) {
@@ -74,21 +74,21 @@ int list_pop(list_t *list) {
   return ret;
 }
 
-void list_insert(list_t *list, int elt, size_t index) {
+void list_insert(struct list *list, int elt, size_t index) {
   assert(index < list->len && "index must be in bounds");
 
-  node_t *current = list->head;
+  struct node *current = list->head;
 
   // get to nth node
   while (--index) {
     current = current->next;
   }
 
-  node_t *ptr = malloc(sizeof(node_t));
+  struct node *ptr = malloc(sizeof(struct node));
   assert(ptr != NULL);
 
   // create new node and point to next
-  node_t new = {elt, current->next};
+  struct node new = {elt, current->next};
   *ptr = new;
 
   // point current node to new node
@@ -97,10 +97,10 @@ void list_insert(list_t *list, int elt, size_t index) {
   list->len += 1;
 }
 
-int list_remove(list_t *list, size_t index) {
+int list_remove(struct list *list, size_t index) {
   assert(index < list->len && "index must be in bounds");
 
-  node_t *current = list->head;
+  struct node *current = list->head;
 
   // get to nth node
   while (--index) {
@@ -108,7 +108,7 @@ int list_remove(list_t *list, size_t index) {
   }
 
   // store next node
-  node_t *next = current->next->next;
+  struct node *next = current->next->next;
 
   // store removed node data
   int ret = current->next->data;
@@ -124,9 +124,9 @@ int list_remove(list_t *list, size_t index) {
   return ret;
 }
 
-node_t *_list_insert_sorted(node_t *sorted, node_t *elem) {
-  node_t *first = sorted;
-  node_t *previous = NULL;
+struct node *_list_insert_sorted(struct node *sorted, struct node *elem) {
+  struct node *first = sorted;
+  struct node *previous = NULL;
 
   while (sorted != NULL && sorted->data < elem->data) {
     previous = sorted;
@@ -144,12 +144,12 @@ node_t *_list_insert_sorted(node_t *sorted, node_t *elem) {
   return first;
 }
 
-void list_insertion_sort(list_t *list) {
-  node_t *current = list->head;
-  node_t *sorted = NULL;
+void list_insertion_sort(struct list *list) {
+  struct node *current = list->head;
+  struct node *sorted = NULL;
 
   while (current != NULL) {
-    node_t *next = current->next;
+    struct node *next = current->next;
     list_print(list);
     list->head = _list_insert_sorted(sorted, current);
     sorted = list->head;
@@ -158,10 +158,10 @@ void list_insertion_sort(list_t *list) {
 }
 
 // oui oui aller
-void list_merge_sort(list_t *list) { return; }
+void list_merge_sort(struct list *list) { return; }
 
 int main(void) {
-  list_t l = list_init();
+  struct list l = list_init();
 
   list_add(&l, 1);
   list_add(&l, 2);
