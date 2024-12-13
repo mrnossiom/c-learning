@@ -34,20 +34,13 @@ struct vec vec_init(void) {
 void vec_destroy(struct vec *v) { free(v->ptr); }
 
 void _vec_grow(struct vec *v) {
-  size_t new_cap = v->cap * 2;
+  v->cap *= 2;
 
-  int *ptr = malloc(new_cap * sizeof(int));
+  int *ptr = realloc(v->ptr, v->cap * sizeof(int));
   if (ptr == NULL)
     errx(1, "memory exhausted");
 
-  // copy old buffer to new buffer
-  memcpy(ptr, v->ptr, v->len * sizeof(int));
-
-  // free old buffer
-  free(v->ptr);
-
   v->ptr = ptr;
-  v->cap = new_cap;
 }
 
 void vec_push(struct vec *v, int elt) {
