@@ -8,7 +8,7 @@ just run <struct-name>
 
 # Structs available
 
-- `src/heap`: list implemented using a `vec` (see below) that holds the max-heap invariant
+- `src/heap`: list implemented using a `vec` (see below) that holds the min-heap invariant
 
   See `print`, `init`, `destroy`, `push`, `pop`, `insert`, `remove`.
 

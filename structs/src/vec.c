@@ -51,6 +51,16 @@ void vec_push(struct vec *v, int elt) {
   v->len += 1;
 }
 
+int vec_get(struct vec *v, size_t index) {
+  assert(index < v->len);
+  return v->ptr[index];
+}
+
+int *vec_get_ptr(struct vec *v, size_t index) {
+  assert(index < v->len);
+  return &v->ptr[index];
+}
+
 int vec_pop(struct vec *v) {
   assert(v->len != 0 && "v must be a non-empty vec");
 

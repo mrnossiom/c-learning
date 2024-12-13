@@ -5,9 +5,17 @@
 #include "vec.h"
 
 int test_heap(void) {
-  struct heap h = heap_init();
+  struct vec v = vec_init();
+  int nums[7] = {3, 1, 8, 4, 6, 2, 7};
+  for (int i = 0; i < 7; i += 1) {
+    vec_push(&v, nums[i]);
+  }
 
-  // TODO
+  vec_print(&v);
+
+  struct heap h = heap_from_vec(v);
+
+  heap_print(&h);
 
   heap_destroy(&h);
 
@@ -17,18 +25,14 @@ int test_heap(void) {
 int test_list(void) {
   struct list l = list_init();
 
-  list_add(&l, 1);
-  list_add(&l, 2);
-  list_add(&l, 7);
-  list_add(&l, 6);
-  list_add(&l, 8);
-  list_add(&l, 4);
-  list_add(&l, 8);
-  list_add(&l, 3);
+  int nums[7] = {3, 1, 8, 4, 6, 2, 7};
+  for (int i = 0; i < 7; i += 1) {
+    list_add(&l, nums[i]);
+  }
 
   list_insert(&l, 3, 1);
-  int a = list_remove(&l, 2);
-  assert(a == 2);
+  int elt = list_remove(&l, 2);
+  assert(elt == 1);
 
   list_print(&l);
 
@@ -45,19 +49,16 @@ int test_list(void) {
 int test_vec(void) {
   struct vec v = vec_init();
 
-  vec_push(&v, 1);
-  vec_push(&v, 2);
-  vec_push(&v, 3);
-  vec_push(&v, 4);
-  vec_push(&v, 6);
-  vec_push(&v, 7);
-  vec_push(&v, 8);
+  int nums[7] = {3, 1, 8, 4, 6, 2, 7};
+  for (int i = 0; i < 7; i += 1) {
+    vec_push(&v, nums[i]);
+  }
 
   vec_print(&v);
 
   vec_insert(&v, 3, 1);
-  int a = vec_remove(&v, 2);
-  assert(a == 2);
+  int elt = vec_remove(&v, 2);
+  assert(elt == 1);
 
   vec_print(&v);
 
