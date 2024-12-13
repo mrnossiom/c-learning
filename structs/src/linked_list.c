@@ -1,10 +1,10 @@
-#include "linked_list.h"
-
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-static void list_print(struct list *list) {
+#include "linked_list.h"
+
+void list_print(struct list *list) {
   struct node *head = list->head;
 
   putchar('[');

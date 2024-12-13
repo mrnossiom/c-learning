@@ -10,6 +10,8 @@ struct vec {
   size_t cap;
 };
 
+void vec_print(struct vec *v);
+
 struct vec vec_init(void);
 void vec_destroy(struct vec *list);
 

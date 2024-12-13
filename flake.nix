@@ -26,6 +26,8 @@
         {
           default = mkClangShell rec {
             nativeBuildInputs = with pkgs; [
+              just
+
               gcc
 
               gdb

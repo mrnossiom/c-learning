@@ -1,6 +1,3 @@
-#include "linked_list.h"
-#include "vec.h"
-
 #include <assert.h>
 #include <stdbool.h>
 #include <stddef.h>
@@ -8,7 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-static void vec_print(struct vec *v) {
+#include "vec.h"
+
+void vec_print(struct vec *v) {
   size_t index = 0;
 
   putchar('[');

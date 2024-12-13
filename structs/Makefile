@@ -1,22 +1,18 @@
-# MAKEFILE
-CC=gcc
-CFLAGS=-Wall -Wextra -Wvla -pedantic
-DEBUG_FLAGS=-g -fsanitize=address
+CC = clang
+CC_FLAGS = -Wall -Wextra -Wvla -pedantic
+CC_DEBUG = -g -fsanitize=address
 
-# im bad at makefile, uncomment the one you want to build
-# SRC=linked_list.c
-# BIN=linked_list
-# SRC=vec.c
-# BIN=vec
+objects = src/vec src/linked_list
 
-all:
-	$(CC) $(CFLAGS) $(SRC) -o $(BIN)
+build: $(objects)
 
-debug:
-	$(CC) $(CFLAGS) $(DEBUG_FLAGS) $(SRC) -o $(BIN)
+debug: CC_FLAGS += $(CC_DEBUG)
+debug: $(objects)
+
+$(objects): %: %.c
+	$(CC) $(CC_FLAGS) -o $@ $<
 
 clean:
-	$(RM) $(BIN)
+	rm $(objects)
 
-.PHONY: all clean
-# END
+.PHONY: build debug clean

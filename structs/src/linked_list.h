@@ -16,6 +16,8 @@ struct list
     struct node *head;
 };
 
+void list_print(struct list *list);
+
 struct list list_init(void);
 void list_destroy(struct list *list);
 

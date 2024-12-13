@@ -1,0 +1,5 @@
+build BIN:
+    make {{BIN}}
+
+run BIN: (build BIN)
+    @./{{BIN}}
