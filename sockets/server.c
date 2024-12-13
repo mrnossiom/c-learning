@@ -43,8 +43,6 @@ static int recv_fd(int socket_fd) {
     return -1;
 
   cmsgp = CMSG_FIRSTHDR(&msgh);
-  assert(cmsgp->cmsg_len == CMSG_LEN(sizeof(int)));
-
   if (cmsgp == NULL || cmsgp->cmsg_len != CMSG_LEN(sizeof(int)) ||
       cmsgp->cmsg_level != SOL_SOCKET || cmsgp->cmsg_type != SCM_RIGHTS) {
     errno = EINVAL;
@@ -94,14 +92,7 @@ int main() {
     printf("recv fd %d, errno: %d\n", sent_fd, errno);
     assert(sent_fd != -1);
 
-    // sleep(1);
-
     write(sent_fd, "hello\n", 5);
-
-    // char buftwo[5];
-    // read(sent_fd, &buftwo, 5);
-
-    // printf("%s", buf);
 
     while ((read_len = read(conn_fd, buf, BUF_SIZE)) != 0) {
       // Then, write those bytes from buf into STDOUT.

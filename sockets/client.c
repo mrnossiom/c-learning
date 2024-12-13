@@ -1,5 +1,4 @@
 #include <assert.h>
-#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <string.h>
@@ -12,7 +11,6 @@
 #include "sock.h"
 
 #define BUF_SIZE 100
-#define SHM_PATH "/dev/shm/wayplain-buffer-0"
 
 static int send_fd(int socket_fd, int fd) {
   int data = 0xDEADBEEF;
@@ -56,11 +54,6 @@ static int send_fd(int socket_fd, int fd) {
 int main() {
   struct sockaddr_un addr;
 
-  // int shm_fd = shm_open(SHM_PATH, O_CREAT | O_EXCL | O_RDWR, 0600);
-  // errno = 0;
-  // perror("yolo");
-  // assert(shm_fd != -1 && "could not open shm file");
-
   char buf[BUF_SIZE];
   ssize_t read_len;
 
@@ -74,7 +67,6 @@ int main() {
   assert(connect(socket_fd, (struct sockaddr *)&addr,
                  sizeof(struct sockaddr_un)) != -1 &&
          "could not connect to socket");
-  // write(1, "hello\n", 5);
 
   assert(send_fd(socket_fd, 1) != -1);
 
