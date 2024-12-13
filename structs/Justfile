@@ -1,5 +1,8 @@
-build BIN:
-    make {{BIN}}
+_default:
+	@just --list --unsorted --list-heading '' --list-prefix '—— '
 
-run BIN: (build BIN)
-    @./{{BIN}}
+build bin:
+    make {{bin}}
+
+run bin: (build bin)
+    @./{{bin}}

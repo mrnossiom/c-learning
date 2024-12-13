@@ -28,12 +28,10 @@
             nativeBuildInputs = with pkgs; [
               just
 
-              gcc
-
               gdb
 
               clang-tools
-            ] ++ (with llvmPackages; [ clang lldb ]);
+            ] ++ (with llvmPackages; [ clang libllvm lldb ]);
 
             buildInputs = with pkgs; [
               # openssl
