@@ -1,8 +1,20 @@
 _default:
 	@just --list --unsorted --list-heading '' --list-prefix '—— '
 
-build bin:
-    make {{bin}}
+objects := "src/main.c \
+src/heap.c \
+src/linked_list.c \
+src/vec.c"
 
-run bin: (build bin)
-    @./{{bin}}
+cflags := "-Wall -Wextra -Wvla -pedantic"
+cflags_debug := "-g -fsanitize=address"
+
+build:
+    cc {{cflags}} {{cflags_debug}} -o structs {{objects}}
+    @echo Built 'structs'!
+
+run: build
+    @./structs
+
+clean:
+    rm -f ./structs ./rstructs

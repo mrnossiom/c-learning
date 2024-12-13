@@ -95,32 +95,3 @@ int vec_remove(struct vec *v, size_t index) {
 
 void vec_insertion_sort(struct vec *v);
 void vec_merge_sort(struct vec *v);
-
-int main(void) {
-  struct vec v = vec_init();
-
-  vec_push(&v, 1);
-  vec_push(&v, 2);
-  vec_push(&v, 3);
-  vec_push(&v, 4);
-  vec_push(&v, 6);
-  vec_push(&v, 7);
-  vec_push(&v, 8);
-
-  vec_print(&v);
-
-  vec_insert(&v, 3, 1);
-  int a = vec_remove(&v, 2);
-  assert(a == 2);
-
-  vec_print(&v);
-
-  // vec_insertion_sort(&v);
-  // vec_merge_sort(&v);
-
-  vec_print(&v);
-
-  vec_destroy(&v);
-
-  return 0;
-}

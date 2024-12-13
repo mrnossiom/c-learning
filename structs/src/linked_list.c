@@ -162,31 +162,3 @@ void list_insertion_sort(struct list *list) {
 
 // oui oui aller
 void list_merge_sort(struct list *list) { return; }
-
-int main(void) {
-  struct list l = list_init();
-
-  list_add(&l, 1);
-  list_add(&l, 2);
-  list_add(&l, 7);
-  list_add(&l, 6);
-  list_add(&l, 8);
-  list_add(&l, 4);
-  list_add(&l, 8);
-  list_add(&l, 3);
-
-  list_insert(&l, 3, 1);
-  int a = list_remove(&l, 2);
-  assert(a == 2);
-
-  list_print(&l);
-
-  list_insertion_sort(&l);
-  // list_merge_sort(&l);
-
-  list_print(&l);
-
-  list_destroy(&l);
-
-  return 0;
-}
