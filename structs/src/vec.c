@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <err.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
@@ -23,7 +24,8 @@ struct vec vec_init(void) {
   size_t cap = 4;
 
   int *ptr = malloc(cap * sizeof(int));
-  assert(ptr != NULL);
+  if (ptr == NULL)
+    errx(1, "memory exhausted");
 
   struct vec v = {ptr, len, cap};
   return v;
@@ -35,7 +37,8 @@ void _vec_grow(struct vec *v) {
   size_t new_cap = v->cap * 2;
 
   int *ptr = malloc(new_cap * sizeof(int));
-  assert(ptr != NULL);
+  if (ptr == NULL)
+    errx(1, "memory exhausted");
 
   // copy old buffer to new buffer
   memcpy(ptr, v->ptr, v->len * sizeof(int));
@@ -65,15 +68,15 @@ int vec_pop(struct vec *v) {
 }
 
 void vec_insert(struct vec *v, int elt, size_t index) {
-  assert(index < v->len && "index must be in bounds");
+  assert(index <= v->len && "index must be in bounds");
 
   // grow if needed
   if (v->len == v->cap)
     _vec_grow(v);
 
-  // copy cells from last to first
+  // copy cells from last to first to avoid overlapping
   for (size_t i = v->len; i > index; i -= 1) {
-    memcpy(&v->ptr[i], &v->ptr[i - 1], sizeof(int));
+    v->ptr[i] = v->ptr[i - 1];
   }
 
   v->ptr[index] = elt;
@@ -89,9 +92,9 @@ int vec_remove(struct vec *v, size_t index) {
 
   v->len -= 1;
 
-  // shift cells left
+  // shift cells left from first to last to avoid overlapping
   for (size_t i = index; i < v->len; i += 1) {
-    memcpy(&v->ptr[i], &v->ptr[i + 1], sizeof(int));
+    v->ptr[i] = v->ptr[i + 1];
   }
 
   return ret;

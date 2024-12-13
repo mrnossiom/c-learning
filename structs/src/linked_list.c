@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <err.h>
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -40,7 +41,8 @@ void list_add(struct list *list, int elt) {
   }
 
   struct node *ptr = malloc(sizeof(struct node));
-  assert(ptr != NULL);
+  if (ptr == NULL)
+    errx(1, "memory exhausted");
 
   // create new node and assign to new memory cell
   struct node new = {elt, NULL};
@@ -75,7 +77,7 @@ int list_pop(struct list *list) {
 }
 
 void list_insert(struct list *list, int elt, size_t index) {
-  assert(index < list->len && "index must be in bounds");
+  assert(index <= list->len && "index must be in bounds");
 
   struct node *current = list->head;
 
@@ -85,7 +87,8 @@ void list_insert(struct list *list, int elt, size_t index) {
   }
 
   struct node *ptr = malloc(sizeof(struct node));
-  assert(ptr != NULL);
+  if (ptr == NULL)
+    errx(1, "memory exhausted");
 
   // create new node and point to next
   struct node new = {elt, current->next};
